@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SearchBar from './Searchbar/Searchbar';
+import Searchbar from './Searchbar/Searchbar';
 import Modal from './Modal/Modal';
 import fetchImage from './FetchImage/FetchImage';
 import { ImageGallery } from './ImageGallery/ImageGallery';
@@ -91,7 +91,7 @@ export class App extends Component {
     return (
       <div className={css.App}>
         {/* {error && alert(`{error.massage}`)} */}
-        <SearchBar onSubmit={this.handleFormSubmit} />
+        <Searchbar onSubmit={this.handleFormSubmit} />
         <ImageGallery openModal={toggleModal} images={images} />
         <ToastContainer
           position="top-center"
