@@ -36,19 +36,19 @@ import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
 export const ImageGallery = ({ images, openModal }) => {
   return (
     <>
-      <ul className={css.ImageGallery}>
-        {images.map(image => {
-          return (
-            <ImageGalleryItem
-              key={image.id}
-              smallImg={image.webformatURL}
-              largeImg={image.largeImageURL}
-              alt={image.tags}
-              openModal={openModal}
-            />
-          );
-        })}
-      </ul>
+      {/* <ul className={css.ImageGallery}> */}
+      {images.map(image => {
+        return (
+          <ImageGalleryItem
+            key={image.id}
+            smallImg={image.webformatURL}
+            largeImg={image.largeImageURL}
+            alt={image.tags}
+            openModal={openModal}
+          />
+        );
+      })}
+      {/* </ul> */}
     </>
   );
 };

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SearchBar from './Searchbar/Searchbar';
 import Modal from './Modal/Modal';
 import fetchImage from './FetchImage/FetchImage';
-import { ImageGallery } from '../ImageGallery/ImageGallery';
+import { ImageGallery } from './ImageGallery/ImageGallery';
 import { MagnifyingGlass } from 'react-loader-spinner';
 import { ToastContainer, toast } from 'react-toastify';
 import css from './App.module.css';
