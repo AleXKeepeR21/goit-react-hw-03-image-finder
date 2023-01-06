@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { MdImageSearch } from 'react-icons/md';
-import css from '../SearchBar/SearchBar.module.css';
+import css from '../SearchBar/Searchbar.module.css';
 
 export default class SearchBar extends Component {
   state = {
