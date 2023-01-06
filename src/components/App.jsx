@@ -11,8 +11,7 @@ export class App extends Component {
   state = {
     query: '',
     images: [],
-    // totalHits: null,
-    index: null,
+    // index: null,
     page: 1,
     loading: false,
     showModal: false,
