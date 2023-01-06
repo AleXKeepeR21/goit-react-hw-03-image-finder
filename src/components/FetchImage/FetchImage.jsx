@@ -1,17 +1,14 @@
-export default async function fetchImage(value, page = 1) {
+export default function fetchImage(value, page = 1) {
   const apiUrl = 'https://pixabay.com/api/';
   const apiKey = '31213831-079e96808e6f65bd38889e682';
 
-  return await fetch(`${apiUrl}?key=${apiKey}&q=${value}&image_type=photo&orientation=horizontal&
+  return fetch(`${apiUrl}?key=${apiKey}&q=${value}&image_type=photo&orientation=horizontal&
     safesearch=true&page=${page}&per_page=12`)
-    .then(async response => {
-      if (!response.ok) {
-        if (response.status === 404) {
-          return [];
-        }
-        throw new Error(response.status);
+    .then(response => {
+      if (response.ok) {
+        return response.json();
       }
-      return await response.json();
+      return Promise.reject(new Error('You enter the same word'));
     })
     .then(images => ({ images: images.hits }))
     .catch(error => {

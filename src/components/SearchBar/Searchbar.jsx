@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
-// import { MdImageSearch } from 'react-icons/bi';
 import { MdImageSearch } from 'react-icons/md';
 import css from '../Searchbar/Searchbar.module.css';
 
@@ -22,7 +21,7 @@ export default class SearchBar extends Component {
       return;
     }
 
-    this.props.onSubmit(this.state);
+    this.props.onSubmit(this.state.query);
     this.reset();
   };
 

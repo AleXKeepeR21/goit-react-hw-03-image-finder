@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
 import SearchBar from './Searchbar/Searchbar';
 import Modal from './Modal/Modal';
-// import fetchImage  from './FetchImage/FetchImage';
-
-import { toast } from 'react-toastify';
+import fetchImage from './FetchImage/FetchImage';
+import { ImageGallery } from '../ImageGallery/ImageGallery';
+import { MagnifyingGlass } from 'react-loader-spinner';
+import { ToastContainer, toast } from 'react-toastify';
 import css from './App.module.css';
 
 export class App extends Component {
   state = {
     query: '',
     images: [],
+    // totalHits: null,
     index: null,
     page: 1,
     loading: false,
     showModal: false,
+    // error: null,
   };
 
   // componentDidMount() {
@@ -26,9 +29,44 @@ export class App extends Component {
   //     .finally(() => this.setState({ loading: false }));
   // }
 
+  // async componentDidUpdate(prevProps, prevState) {
+  //   try {
+  //     if (prevState.query !== this.state.query) {
+  //       this.setState({ loading: true });
+
+  //       const response = fetchImage(this.state.query);
+  //       const { hits, totalHits } = response;
+
+  //       this.setState({
+  //         images: [...this.state.images, ...hits],
+  //         totalHits,
+  //         loading: false,
+  //       });
+  //     }
+  //   } catch (error) {
+  //     toast.error('Something went wrong, please try again');
+  //     this.setState({ loading: false });
+  //   }
+  // }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.query !== this.state.query) {
+      this.setState({ loading: true });
+
+      const data = fetchImage(this.state.query, this.state.page);
+      data
+        .then(images => this.setState({ images: images.hits }))
+        .catch(error => this.setState({ error }))
+        .finally(() => {
+          this.setState({ loading: false });
+          this.setState(prevState => ({ page: prevState.page + 1 }));
+        });
+    }
+  }
+
   handleFormSubmit = query => {
     if (this.state.query === query) {
-      toast.error('You enter the same word!!! Enter new one!!!', {
+      toast.error('You enter the same word!🦄 Enter new one!', {
         theme: 'colored',
       });
     }
@@ -39,6 +77,10 @@ export class App extends Component {
     });
   };
 
+  getIndex = index => {
+    this.setState({ index });
+  };
+
   toggleModal = () => {
     this.setState(state => ({
       showModal: !state.showModal,
@@ -46,11 +88,30 @@ export class App extends Component {
   };
 
   render() {
-    const { showModal } = this.state;
+    const { showModal, loading, images, toggleModal } = this.state;
     return (
       <div className={css.App}>
+        {/* {error && alert(`{error.massage}`)} */}
         <SearchBar onSubmit={this.handleFormSubmit} />
-
+        <ImageGallery openModal={toggleModal} images={images} />
+        <ToastContainer
+          position="top-center"
+          autoClose={4000}
+          theme="colored"
+          // transition="flip"
+        />
+        {loading && (
+          <MagnifyingGlass
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="MagnifyingGlass-loading"
+            wrapperStyle={{ justifycontent: 'center', margin: 'auto' }}
+            wrapperClass="MagnifyingGlass-wrapper"
+            glassColor="#c0efff"
+            color="#e15b64"
+          />
+        )}
         {showModal && (
           <Modal onClose={this.toggleModal}>
             {/* <img src={largeImageURL} alt="" /> */}
