@@ -3,7 +3,8 @@ import SearchBar from './SearchBar/Searchbar';
 import Modal from './Modal/Modal';
 import fetchImage from './FetchImage/FetchImage';
 import { ImageGallery } from './ImageGallery/ImageGallery';
-import { MagnifyingGlass } from 'react-loader-spinner';
+// import { MagnifyingGlass } from 'react-loader-spinner';
+import { Loader } from './Loader/Loader';
 import { ToastContainer, toast } from 'react-toastify';
 import css from './App.module.css';
 
@@ -147,18 +148,7 @@ export class App extends Component {
           theme="colored"
           // transition="flip"
         />
-        {loading && (
-          <MagnifyingGlass
-            visible={true}
-            height="80"
-            width="80"
-            ariaLabel="MagnifyingGlass-loading"
-            wrapperStyle={{ justifycontent: 'center', margin: 'auto' }}
-            wrapperClass="MagnifyingGlass-wrapper"
-            glassColor="#c0efff"
-            color="#e15b64"
-          />
-        )}
+        {loading && <Loader />}
         {showModal && (
           <Modal onClose={this.toggleModal}>
             <img src={modalImage} alt={imageAlt} />
