@@ -52,14 +52,11 @@ export class App extends Component {
     if (prevState.query !== this.state.query) {
       this.setState({ loading: true });
 
-      const data = fetchImage(this.state.query, this.state.page);
-      data
+      fetchImage(this.state.query, this.state.page)
         .then(response => {
-          console.log(response);
           if (response.ok) {
             return response.json();
           }
-          return new Error('Image not found.Try again');
         })
         .then(images => this.setState({ images: images.hits }))
         .catch(error => this.setState({ error }))
@@ -67,6 +64,28 @@ export class App extends Component {
           this.setState({ loading: false });
           this.setState(prevState => ({ page: prevState.page + 1 }));
         });
+      // .then(images => this.setState({ images: images.hits }))
+      // .catch(error => this.setState({ error }))
+      // .finally(() => {
+      //   this.setState({ loading: false });
+      //   this.setState(prevState => ({ page: prevState.page + 1 }));
+      // });
+
+      // const data = fetchImage(this.state.query, this.state.page);
+      // data
+      //   .then(response => {
+      //     console.log(response);
+      //     if (response.ok) {
+      //       return response.json();
+      //     }
+      //     return new Error('Image not found.Try again');
+      //   })
+      //   .then(images => this.setState({ images: images.hits }))
+      //   .catch(error => this.setState({ error }))
+      //   .finally(() => {
+      //     this.setState({ loading: false });
+      //     this.setState(prevState => ({ page: prevState.page + 1 }));
+      //   });
     }
   }
 
