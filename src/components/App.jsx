@@ -16,6 +16,8 @@ export class App extends Component {
     loading: false,
     showModal: false,
     // error: null,
+    modalImage: '',
+    imageAlt: '',
   };
 
   // componentDidMount() {
@@ -124,14 +126,16 @@ export class App extends Component {
     this.setState({ index });
   };
 
-  toggleModal = () => {
+  toggleModal = (modalImage, imageAlt) => {
     this.setState(state => ({
       showModal: !state.showModal,
+      modalImage,
+      imageAlt,
     }));
   };
 
   render() {
-    const { showModal, loading, images } = this.state;
+    const { showModal, loading, images, modalImage, imageAlt } = this.state;
     return (
       <div className={css.App}>
         {/* {error && alert(`{error.massage}`)} */}
@@ -157,7 +161,7 @@ export class App extends Component {
         )}
         {showModal && (
           <Modal onClose={this.toggleModal}>
-            {/* <img src={largeImageURL} alt="" /> */}
+            <img src={modalImage} alt={imageAlt} />
           </Modal>
         )}
       </div>
