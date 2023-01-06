@@ -1,14 +1,27 @@
-// import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import css from '../ImageGalleryItem/ImageGalleryItem.module.css';
-// import { ImageGallery } from '../ImageGallery/ImageGallery';
 
-// export class ImageGalleryItem extends Component {
-//     render() {
-//         const { image, onClick, tags, index } = this.props;
-//         return
-//     }
-// }
+export const ImageGalleryItem = ({ smallImg, largeImg, alt, openModal }) => {
+  return (
+    // <GalleryItem onClick={() => openModal(largeImg, alt)}>
+    //   <GalleryItemImg src={smallImg} alt={alt} />
+    //   </GalleryItem>
+
+    <li
+      className={css.imageGalleryItem}
+      onClick={() => openModal(largeImg, alt)}
+    >
+      <img className={css.imageGalleryItemImage} src={smallImg} alt={alt} />
+    </li>
+  );
+};
+
+ImageGalleryItem.propTypes = {
+  smallImg: PropTypes.string.isRequired,
+  largeImg: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+  openModal: PropTypes.func.isRequired,
+};
 
 // export const ImageGalleryItem = ({
 //   images,
@@ -63,25 +76,3 @@ import css from '../ImageGalleryItem/ImageGalleryItem.module.css';
 //   tags: PropTypes.string,
 //   index: PropTypes.number,
 // };
-
-export const ImageGalleryItem = ({ smallImg, largeImg, alt, openModal }) => {
-  return (
-    // <GalleryItem onClick={() => openModal(largeImg, alt)}>
-    //   <GalleryItemImg src={smallImg} alt={alt} />
-    //   </GalleryItem>
-
-    <li
-      className={css.imageGalleryItem}
-      onClick={() => openModal(largeImg, alt)}
-    >
-      <img className={css.imageGalleryItemImage} src={smallImg} alt={alt} />
-    </li>
-  );
-};
-
-ImageGalleryItem.propTypes = {
-  smallImg: PropTypes.string.isRequired,
-  largeImg: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
-  openModal: PropTypes.func.isRequired,
-};

@@ -54,6 +54,13 @@ export class App extends Component {
 
       const data = fetchImage(this.state.query, this.state.page);
       data
+        .then(response => {
+          console.log(response);
+          if (response.ok) {
+            return response.json();
+          }
+          return new Error('Image not found.Try again');
+        })
         .then(images => this.setState({ images: images.hits }))
         .catch(error => this.setState({ error }))
         .finally(() => {
@@ -62,6 +69,20 @@ export class App extends Component {
         });
     }
   }
+
+  //   const data = fetchImage(this.state.query, this.state.page)
+  // .then(response => {
+  //         if (response.ok) {
+  //           return response.json();
+  //         }
+  //         return new Error('Image not found.Try again');
+  //       })
+  //         .then(images => this.setState({ images: images.hits }))
+  //         .catch(error => this.setState({ error }))
+  //         .finally(() => {
+  //           this.setState({ loading: false });
+  //           this.setState(prevState => ({ page: prevState.page + 1 }));
+  //         });
 
   handleFormSubmit = query => {
     if (this.state.query === query) {
@@ -75,6 +96,10 @@ export class App extends Component {
       images: [],
     });
   };
+  // handleFormSubmit = query => {
+  //   this.setState({ query });
+  //   this.setState({ page: 1 });
+  // };
 
   getIndex = index => {
     this.setState({ index });
@@ -87,12 +112,12 @@ export class App extends Component {
   };
 
   render() {
-    const { showModal, loading, images, toggleModal } = this.state;
+    const { showModal, loading, images } = this.state;
     return (
       <div className={css.App}>
         {/* {error && alert(`{error.massage}`)} */}
         <SearchBar onSubmit={this.handleFormSubmit} />
-        <ImageGallery openModal={toggleModal} images={images} />
+        <ImageGallery openModal={this.toggleModal} images={images} />
         <ToastContainer
           position="top-center"
           autoClose={4000}
