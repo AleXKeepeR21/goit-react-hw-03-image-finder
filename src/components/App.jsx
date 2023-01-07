@@ -3,8 +3,8 @@ import SearchBar from './SearchBar/Searchbar';
 import Modal from './Modal/Modal';
 import fetchImage from './FetchImage/FetchImage';
 import { ImageGallery } from './ImageGallery/ImageGallery';
-// import { MagnifyingGlass } from 'react-loader-spinner';
 import { Loader } from './Loader/Loader';
+import { Button } from './Button/Button';
 import { ToastContainer, toast } from 'react-toastify';
 import css from './App.module.css';
 
@@ -20,36 +20,6 @@ export class App extends Component {
     modalImage: '',
     imageAlt: '',
   };
-
-  // componentDidMount() {
-  //   this.setState({ loading: true });
-
-  //   fetch(`https://pixabay.com/api/?key=31213831-079e96808e6f65bd38889e682&q=cat&image_type=photo&orientation=horizontal&
-  //     safesearch=true&page=1&per_page=12`)
-  //     .then(res => res.json())
-  //     .then(images => this.setState({ images: images.hits }))
-  //     .finally(() => this.setState({ loading: false }));
-  // }
-
-  // async componentDidUpdate(prevProps, prevState) {
-  //   try {
-  //     if (prevState.query !== this.state.query) {
-  //       this.setState({ loading: true });
-
-  //       const response = fetchImage(this.state.query);
-  //       const { hits, totalHits } = response;
-
-  //       this.setState({
-  //         images: [...this.state.images, ...hits],
-  //         totalHits,
-  //         loading: false,
-  //       });
-  //     }
-  //   } catch (error) {
-  //     toast.error('Something went wrong, please try again');
-  //     this.setState({ loading: false });
-  //   }
-  // }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.query !== this.state.query) {
@@ -67,44 +37,8 @@ export class App extends Component {
           this.setState({ loading: false });
           this.setState(prevState => ({ page: prevState.page + 1 }));
         });
-      // .then(images => this.setState({ images: images.hits }))
-      // .catch(error => this.setState({ error }))
-      // .finally(() => {
-      //   this.setState({ loading: false });
-      //   this.setState(prevState => ({ page: prevState.page + 1 }));
-      // });
-
-      // const data = fetchImage(this.state.query, this.state.page);
-      // data
-      //   .then(response => {
-      //     console.log(response);
-      //     if (response.ok) {
-      //       return response.json();
-      //     }
-      //     return new Error('Image not found.Try again');
-      //   })
-      //   .then(images => this.setState({ images: images.hits }))
-      //   .catch(error => this.setState({ error }))
-      //   .finally(() => {
-      //     this.setState({ loading: false });
-      //     this.setState(prevState => ({ page: prevState.page + 1 }));
-      //   });
     }
   }
-
-  //   const data = fetchImage(this.state.query, this.state.page)
-  // .then(response => {
-  //         if (response.ok) {
-  //           return response.json();
-  //         }
-  //         return new Error('Image not found.Try again');
-  //       })
-  //         .then(images => this.setState({ images: images.hits }))
-  //         .catch(error => this.setState({ error }))
-  //         .finally(() => {
-  //           this.setState({ loading: false });
-  //           this.setState(prevState => ({ page: prevState.page + 1 }));
-  //         });
 
   handleFormSubmit = query => {
     if (this.state.query === query) {
@@ -118,13 +52,28 @@ export class App extends Component {
       images: [],
     });
   };
-  // handleFormSubmit = query => {
-  //   this.setState({ query });
-  //   this.setState({ page: 1 });
+
+  // loadMore = () => {
+  //   this.setState({ loading: true });
+  //   this.setState(prevState => ({ page: prevState.page + 1 }));
   // };
 
-  getIndex = index => {
-    this.setState({ index });
+  loadMoreImages = () => {
+    this.setState({ loading: true });
+    fetchImage(this.state.query, this.state.page)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then(images =>
+        this.setState({ images: [...this.state.images, ...images.hits] })
+      )
+      .catch(error => this.setState({ error }))
+      .finally(() => {
+        this.setState({ loading: false });
+        this.setState(prevState => ({ page: prevState.page + 1 }));
+      });
   };
 
   toggleModal = (modalImage, imageAlt) => {
@@ -154,6 +103,7 @@ export class App extends Component {
             <img src={modalImage} alt={imageAlt} />
           </Modal>
         )}
+        {images.length >= 12 && <Button onClick={this.loadMoreImages} />}
       </div>
     );
   }
