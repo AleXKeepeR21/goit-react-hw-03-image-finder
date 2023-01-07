@@ -6,6 +6,7 @@ import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Loader } from './Loader/Loader';
 import { Button } from './Button/Button';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import css from './App.module.css';
 
 export class App extends Component {
@@ -95,7 +96,6 @@ export class App extends Component {
           position="top-center"
           autoClose={4000}
           theme="colored"
-          // transition="flip"
         />
         {loading && <Loader />}
         {showModal && (
